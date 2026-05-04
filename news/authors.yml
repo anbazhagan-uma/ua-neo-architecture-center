@@ -63,9 +63,18 @@ AlexaMacDonald:
 
 anbazhagan-uma:
   name: Uma Anbazhagan
-  title: Principal Solution Architect
+  title: Principal Solutions Architect
   url: https://www.linkedin.com/in/umaanbazhagan/
   image_url: https://github.com/anbazhagan-uma.png
   page: true
   socials:
     linkedin: umaanbazhagan
+
+uklasing:
+  name: Uwe Klasing
+  title: Chief Solutions Architect
+  url: https://www.linkedin.com/in/uklasing/
+  image_url: https://github.com/uklasing.png
+  page: true
+  socials:
+    linkedin: uklasing

@@ -4,7 +4,7 @@ slug: /ref-arch/f5b6b597a6/2
 sidebar_position: 2
 sidebar_custom_props:
   category_index: []
-title: Intelligent Applications by SAP
+title: Intelligent Content by SAP
 description: >-
   Configure Intelligent Applications in SAP BDC for streamlined analytics using
   prebuilt data products and stories.
@@ -14,7 +14,7 @@ keywords:
   - business data cloud
   - prebuilt analytics solutions
   - modernized configurations
-sidebar_label: Intelligent Applications in SAP Business Data Cloud
+sidebar_label: Intelligent Content in SAP BDC
 image: img/ac-soc-med.png
 tags:
   - data
@@ -35,29 +35,58 @@ contributors:
   - peterfendt
 discussion: 
 last_update:
-  author: jmsrpp
+  author: jmsrpp,anbazhagan-uma
   date: 2025-05-19
 ---
 
-# Intelligent Applications by SAP
+### Overview
 
-## Overview
+Intelligent content is a suite of adaptive, AI-powered applications that learn from your data, understand business context, and act on your behalf.
 
-Intelligent Applications in SAP Business Data Cloud provide pre-configured, SAP-managed dashboards and analytics based on underlying Data Products and models. These apps leverage SAP Analytics Cloud as the key front-end solution for visualization, simplifying the process of creating interactive reports and dashboards. Intelligent Applications reduce complexity, requiring only installation and role assignment for consumption.
+- It is the next-generation content autonomously delivers insights, makes recommendations, and orchestrates workflows.
+- Built on a foundation of certified data products in SAP Business Data Cloud.
+- Available across all lines of business, such as finance, supply chain, and HR.
 
-## Architecture of Intelligent Applications
+SAP Business Data Cloud provides the trusted data foundation that powers pre-built intelligent content for every line of business. This intelligent content delivers data products, semantic models, analytical models, and dashboards aligned to specific use cases from each line of business (e.g. workforce planning for HCM, working capital for Finance, etc.)
+
+### Intelligent Package and Intelligent Content
+
+An Intelligent package for a given line of business/industry is a set of intelligent content along with all the requisite components. SAP delivers the below list of intelligent packages:
+
+- Cloud ERP Intelligence Private (released 2025)
+-People Intelligence (released 2025)
+-Finance Intelligence (controlled availability as of January 2026)
+-Spend Intelligence
+-Supply Chain Intelligence
+-Revenue Intelligence
+-Travel & Expense Intelligence
+-Retail Intelligence
+-Consumer Products Intelligence
+
+
+![Intelligent Content](drawio/intelligent-content.png)
+
+Intelligent content itself is AI-augmented application(s) that generates continuous learning and contextual experiences relying on a composable architecture leveraging rich data products, domain content, and application components. This can be AI Agents and Intelligent Applications.
+
+No-code Intelligent Content is built in SAP SAC based on Analytics and AI Centric.
+
+Pro-code Intelligent Content SAP managed pro-code application built on SAP BTP that consumes data products and semantic models from one or more Intelligent packages.
+
+### Formation Setup for Intelligent Content
+
+To enable or develop Intelligent Content, SAP Business Data Cloud, SAP Analytics Cloud, and SAP Datasphere must operate in a formation. This involves:
 
 High-Level Object Structure of Intelligent Applications consist of:
 
-**1. Visualization Objects**:
+- **Visualization Objects**:
     - SAP Analytics Cloud stories serve as dashboards.
     - Interactive elements such as diagrams, tables, and charts.
 
-**2. Underlying Models**:
+- **Underlying Models**:
     - SAP Datasphere-based analytic models and views.
     - Automated data replication and transformation services.
 
-### Data Flows
+**Data Flows**
 
 The following diagram shows how raw source data is enriched as it moved through SAP BDC components until being surfaced in an Intelligent Application.
 
@@ -87,113 +116,70 @@ graph TD;
     end
 ```
 
-## Formation Setup for Intelligent Applications
 
-To enable Intelligent Applications, SAP Business Data Cloud, SAP Analytics Cloud, and SAP Datasphere must operate in a formation. This involves:
 
-**1. Single Sign-On**:
+- Single Sign-On
 
     - Seamless navigation between tenants of SAP Business Data Cloud, SAP Analytics Cloud, and SAP Datasphere.
     - Enabled via [SAP Cloud Identity Services](https://help.sap.com/docs/cloud-identity-services) and Identity Authentication.
 
-**2. Live Data Connection**:
+- Live Data Connection
 
     - SAP-managed live data connections link SAP Datasphere objects to SAP Analytics Cloud for Intelligent Applications usage.
 
-**3. Custom Connections**:
+- Custom Connections
     - Users can create additional connections to access custom models and Data Products.
 
-## Workflow of Intelligent Applications
+### Key Components of Intelligent Applications
 
-### Installation
+| **Component**            | **Description**                                                                  |
+| ------------------------ | -------------------------------------------------------------------------------- |
+| **Visualization Object** | SAP Analytics Cloud story for dashboards and reports. AI Agents.  
+| **Analytic Models**      | SAP Datasphere models that prepare and expose data for visualization.            |
+| **Data Products**        | Data sets integrated into the analytic models, derived from Foundation Services. |
+| **Foundation Services**  | Backend services for data replication and transformation.                        |
+| **Roles**                | Scoped roles generated for access to relevant spaces.                            |
 
-**1. Search and Install**:
+
+#### Workflow of Intelligent Applications Development
+
+**1. Installation of Data Package/Product and Intelligent Content**
+
+Search and Install
 
     - Log in to SAP Business Data Cloud cockpit.
     - Browse available Intelligent Applications and their associated documentation.
 
-**2. Automated Setup**:
+Automated Setup
 
     - Installation generates SAP-managed objects, including:
         - Associated Data Products.
         - Replication flows, tables, views, and analytic models in SAP Datasphere.
         - Scoped roles for the relevant spaces.
 
-**3. Dashboard Creation**:
-    - A dashboard is deployed as an SAP Analytics Cloud story for visualization.
+**2. Dashboard Creation**
+A dashboard is deployed as an SAP Analytics Cloud story for visualization.
 
-### Visualization
+**3. Visualization**
 
 -   Intelligent Applications provide interactive dashboards based on live data connections to SAP Datasphere.
 -   Users can apply filters, select members or dimensions, and set variable values (e.g., target currency).
 
-## Key Components of Intelligent Applications
 
-| **Component**            | **Description**                                                                  |
-| ------------------------ | -------------------------------------------------------------------------------- |
-| **Visualization Object** | SAP Analytics Cloud story for dashboards and reports.                            |
-| **Analytic Models**      | SAP Datasphere models that prepare and expose data for visualization.            |
-| **Data Products**        | Data sets integrated into the analytic models, derived from Foundation Services. |
-| **Foundation Services**  | Backend services for data replication and transformation.                        |
-| **Roles**                | Scoped roles generated for access to relevant spaces.                            |
+### Customization and Enhancement
 
-## Customization and Enhancement
-
-### Copying Content
+**Copying Content**
 
 -   SAP-managed Intelligent Applications and their dependencies cannot be directly edited but components can be copied and adapted, as needed.
 -   Users can copy SAP Analytics Cloud stories to enhance or adjust them for their needs.
 
-### Enhancing Models
+
+**Enhancing Models**
 
 -   For advanced use cases, users can copy and modify the underlying analytic models.
 -   Changes to models affect both original and copied stories.
 
-## Features of Intelligent Applications
 
-**1. Pre-Configured Dashboards**:
-- Delivered as SAP Analytics Cloud stories.
-- Based on SAP Datasphere models and views.
+### Conclusion
 
-**2. Live Data Connection**:
-- Real-time data access from SAP Datasphere to SAP Analytics Cloud.
-
-**3. Scalable Deployment**:
-- Installation automates creation of required objects and roles.
-
-**4. Customizable**:
-- Components such as stories and models can be copied and enhanced for specific use cases.
-
-## How to Leverage SAP Intelligent Applications
-
-**1. Selection and Deployment**
-
-- Identify relevant Intelligent Applications from the SAP BDC marketplace
-- Review capabilities and alignment with business objectives
-- Deploy with minimal configuration required
-- Customize to reflect your organization's specific metrics and processes
-
-**2. User Adoption and Enablement**
-
-- Access embedded best practices and analytical methodologies
-- Follow recommended analysis paths for common business questions
-- Use natural language interfaces (SAC JustAsk)
-
-**3. Extending and Customizing**
-
-- Add organization-specific metrics and calculations
-- Create personalized views and dashboards
-- Connect to additional data sources as needed
-- Apply company-specific business rules and thresholds
-
-**4. Business Value Realization**
-
-- Track built-in adoption metrics and usage patterns
-- Measure business impact through included KPI frameworks
-- Identify opportunities for process improvement
-- Share insights across departments using collaboration features
-- Continuously optimize based on evolving business needs
-
-## Conclusion
-
-Intelligent Applications simplify the visualization and analysis of data in SAP Business Data Cloud. By leveraging SAP Analytics Cloud for dashboards and SAP Datasphere for data preparation, Intelligent Applications offer pre-configured, SAP-managed solutions that reduce complexity and enhance usability. Their architecture integrates Data Products, Foundation Services, and analytic models, ensuring seamless deployment and scalability while allowing customization for advanced scenarios.
+Intelligent Content simplify the visualization and analysis of data in SAP Business Data Cloud. By leveraging SAP Analytics Cloud for dashboards and SAP Datasphere for data preparation, Intelligent Applications offer pre-configured, SAP-managed solutions that reduce complexity and enhance usability. Their architecture integrates Data Products, Foundation Services, and analytic models, ensuring seamless deployment and scalability while allowing customization for advanced scenarios.

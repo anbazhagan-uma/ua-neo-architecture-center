@@ -5,18 +5,16 @@ sidebar_position: 3
 sidebar_custom_props:
   category_index: []
 title: >-
-  Streamlining Business Insights with SAP BDC, S/4HANA, and Intelligent
-  Applications
+ Derive Insights from Intelligent Content and Data Products
 description: >-
-  Streamline business insights with SAP BDC, integrating S/4HANA and Intelligent
-  Applications for analytics, decision-making, and lifecycle management.
+ Leverage Intelligent Content and Data Products to derive insights. 
 keywords:
   - sap
   - business data cloud
   - intelligent apps
   - analytics optimization
   - data foundation
-sidebar_label: Implement SAP-managed Intelligent Applications in SAP BDC
+sidebar_label: Derive AI Insights from Intelligent Content
 image: img/ac-soc-med.png
 tags:
   - data
@@ -38,23 +36,50 @@ contributors:
   - peterfendt
 discussion: 
 last_update:
-  author: jmsrpp
+  author: jmsrpp, anbazhagan-uma
   date: 2025-10-05
 ---
 
-# Greenfield Implementation of SAP BDC and SAP S/4HANA with SAP-Managed Data Products and Intelligent Applications
 
-## Introduction
+### Introduction
 
-Customers using SAP S/4HANA 2021 or later can provision a connection to SAP Business Data Cloud (SAP BDC). The Unified Customer Landscape (UCL) Services will be utilized to create the SAP BDC formation, integrating the SAP S/4HANA system with SAP Business Data Cloud automatically. This enables metadata from Data Products to be shared with the SAP BDC Cockpit, the Datasphere Catalog, and Business Accelerator Hub, facilitating data transfer from SAP S/4HANA to SAP BDC's Foundation Services layer. SAP BDC Foundation Services, managed by SAP, includes an Object Store and other technical services to transform and publish data products from SAP systems.
+Intelligent Content represent a distinct use case from the broader Intelligent Applications context. They contain an SAP managed collection of analytical assets and functionalities to provide value to customers through analytical, process, or domain insights. It can contain data products, semantic models, stories, planning models, AI-powered analytics, and more.
 
-This architecture pattern focuses on installing and consuming SAP-managed data products within SAP Analytics Cloud as Intelligent Applications pre-delivered by SAP.
+### Reference Architecture of Intelligent Content
+
+Intelligent content can be classic analytical dashboards(Working Capital,Workforce Planning), Search-driven applications(Joule) and CAP/RAP Applications(Spend Control Tower).
+
+![drawio](drawio/intelligent-content-refarch.drawio)
+
+![Intelligent Content](drawio/intelligent-content-refarch.png)
+
+
+**Definition**
+
+Intelligent content based on SAP BTP Application built using the SAP BTP Guidance Framework. It is SAP-managed multi-tenant Saas application built using SAP BTP CAP or ABAP Cloud and SAP HANA Cloud. It can consume Data Products and can also produce Data Products. These are commercialized through BDC Intelligent Package SKU. Stand-alone apps can consume data products via App2App integration scenario via embedded FOS. All applications are built using CAP-Jana or CAP-JS on SAP BTP.
+
+**Data Product Foundation:**
+Data Product represents curated dataset available for consumption in intelligent applications.These can be authored in the unified Data Product Studio. A comprehensive description of the data products together with their schema, dependencies and references are provided using Open Resource Discovery (ORD) and Core Schema Notation (CSN). Both ORD and CSN are open standards developed and open sourced by SAP. The general information about available data products is provided on the Business Acceleration Hub. In the customer landscapes the specific information is collected and aggregated in the Unified Customer Landscape. UCL serves as the main data products repository in these customer landscape. 
+
+SAP BDC Foundation services sources Data Product data from LoB Application, CAP Applications through thier HANA Cloud and also from customer specific data management systems.
+SAP BDC provides range of data access and consumption options, initial focus is on Delta Sharing of Data Products.
+
+**UCL Formations:**
+UCL Formations are a logical grouping of SAP systems together in one virtual “landscape”.
+
+**Intelligent Content Design Time:**
+- Applications are built using SAP Joule Studio using SAP CAP Java on HANA Cloud. They run either on SAP Cloud Foundry/- Kyma runtime.
+- The application lifestyle is simplified and will be part of Application Foundation in SAP BTP Fabric.
+- SAP CAP will provide tooking to import the metadata of SAP Data Product. With Fabric virtual tables, BDC Foundation services will share the data product to SAP HANA Cloud via Delta Share API exposed by BDC FOS.
+- Analytical models are define in CAP CDS by adding analytical annotations. CAP Analytics plugins will be available.
+
+**Intelligent Content Run-time:**
+- Tenant mapping between SAP HANA Cloud and BDC FOS is done via UCL.
+- Data Product entities in BDC FOS will be available as Fabric Virtual Tables (FVT) in the HANA Cloud tenant of the CAP application.
+- CAP will deploy the pre-defined analytical models that are part of the IntApp locally, into the HANA Cloud tenant of the CAP app 
+- The Analytical UI elements (SAC stories and/or Composable elements) will connect to the InA API exposed by CAP.
 
 ## Installing, Activating, and Visualizing a Standard SAP S/4HANA Data Product
-
-### Producing a Data Product in SAP S/4HANA Private Cloud Edition (PCE)
-
-A **data product** is a curated, self-contained collection of tables and business data, accessible for consumption by external applications or services via standardized APIs. In SAP S/4HANA, data products are created by exposing relevant datasets through APIs and enriching them with comprehensive metadata. This metadata is structured as an Open Resource Discovery (ORD) document, detailing the data product's purpose, structure, and access mechanisms.
 
 ### Installing and Activating a Data Product in SAP Datasphere
 
@@ -76,35 +101,7 @@ For advanced visualization and planning, **SAP Analytics Cloud (SAC)** is the re
 
 By following this streamlined approach, organizations can efficiently produce, deploy, and visualize standard SAP S/4HANA data products, unlocking faster, more reliable insights and maximizing the value of their SAP data landscape.
 
-## SAP BDC Intelligent Applications
-
-Intelligent Applications represent the highest level of abstraction in SAP BDC's data product hierarchy, packaging multiple data products into comprehensive, purpose-built analytical solutions.
-
-**SAP Business Data Cloud Intelligent Applications** are SaaS components that provide business users with intelligent insights derived from their data. These ready-to-use apps leverage SAP data products and offer pre-built analytical models, dashboards, and workflows for various industries and functions. Integrated with SAP Business AI, they enable timely decisions based on real-time signals. SAP manages these apps, ensuring automatic data connection, accuracy, and faster insights. The **Intelligent Applications - Design Guidelines** guide the creation of no-code Intelligent Applications in SAP Analytics Cloud.
-
-An **Insight Package** is a SAP-managed collection of analytical resources and functionalities delivering analytical, process, or domain insights. It comprises data products, semantic models, dashboards, planning templates, and future AI and KPI watchlist features.
-
-Insight Packages combine data products, data models, and SAP Analytics Cloud content, along with search and SAP-managed KPIs. The SAP Analytics Cloud content demonstrates the use of underlying data products for specific analytics scenarios. Customers can adapt the data products for their needs, using the front-end as a no-code template. The combined value of data products, the semantic model, and templates is key.
-
-A **Pro Intelligent Application** is a SAP-managed, pro-code application built on SAP BTP that utilizes data products and semantic models from Insight Packages. Both Insight Packages and Pro Intelligent Applications can be built by SAP or partners.
-
-**Pro Intelligent Applications**, requiring SAP Business Data Cloud, are full business applications implementing specific business processes. Built with a pro-code approach using CAP, they follow standard product lifecycles, roadmaps, and SLAs with regular updates. Typically including strong analytical components alongside transactional or operational features, these "second-layer" apps integrate data from multiple "first-layer" applications (like SAP S/4HANA). They can also generate new data for other applications.
-
-## Architecture
-
-With the current release of SAP BDC and Intelligent Applications, customers can either use the pre-delivered content as-is or customize the analytical model of the pre-delivered content to develop custom Intelligent Applications.
-
-Insight packages include data products, base and analytical models, and pre-defined SAC visualizations, planning templates, search-driven insights, and KPI watchlists. In SAP-managed Intelligent Applications, data products reside in the SAP Foundation Services Layer, base models and analytic models are housed in SAP Datasphere, and visualizations are managed in SAP SAC/BTP.
-
-### High-Level Setup Steps Prior to Installing and Using SAP Intelligent Applications
-
-1. Provision required systems (SAP Datasphere Tenant, SAC Tenant, SAP S/4HANA PCE, optional: SAP Databricks). The SAP BDC Cockpit will be available once the formation is created in SAP BTP.
-2. Install relevant components in SAP S/4HANA.
-3. Set up communication arrangements (inbound/outbound) in SAP S/4HANA.
-5. Configure the Cloud Connector.
-6. Create the formation.
-
-### SAP-Delivered Intelligent Application
+### SAP-Delivered Intelligent Content
 
 SAP-managed data products are installed, and end users utilize the standard Intelligent Applications via SAP Analytics Cloud. Intelligent Applications are pre-built analytical applications within SAP BDC that help uncover hidden insights and enable faster decision-making. These apps are fully managed by SAP, built on curated SAP BDC data products, Datasphere models, and SAC stories, and include predefined metrics, AI models, and planning tools.
 
@@ -114,7 +111,7 @@ SAP-managed data products are installed, and end users utilize the standard Inte
 
 ![drawio](drawio/sap-managed-intelligent-application.drawio)
 
-### Customization of SAP-Delivered Intelligent Application
+### Customization of SAP-Delivered Intelligent Content
 
 Organizations can copy and customize the underlying SAP Datasphere analytical models and SAP Analytics Cloud stories, leveraging SAP-managed data products.
 
@@ -127,7 +124,7 @@ Organizations can copy and customize the underlying SAP Datasphere analytical mo
 - **SAP Analytics Cloud (SAC):** Provides advanced analytics and visualization capabilities.
 - **Data Products:** Standardized datasets for AI/ML and cross-domain analytics. Exposed for consumption outside the producing application via APIs, described by high-quality metadata, and semantically aligned for access through the Data Product Directory.
 - **Data Packages:** Logical grouping of data products, used as foundations for modeling in SAP Datasphere or for AI/ML scenarios in SAP Databricks.
-- **Intelligent Applications:** Pre-built applications for actionable intelligence. Low-code apps composed of data products, data models, and SAC content. SAC content demonstrates the underlying data products to fulfill specific analytics use cases. Customers can extend the analytical layer to meet specific requirements.
+- **Intelligent Content:** Pre-built applications for actionable intelligence. Low-code apps composed of data products, data models, and SAC content. SAC content demonstrates the underlying data products to fulfill specific analytics use cases. Customers can extend the analytical layer to meet specific requirements.
 
 ## Examples in an SAP Context
 
@@ -141,12 +138,10 @@ Not all examples listed below are generally available (GA) at this time.
 - **People Analytics:** Helps customers understand their workforce composition and organizational structure. Examples: Employee Central, Learning.
 - **Spend Analytics:** Provides a comprehensive overview of spend across multiple applications, uncovering hidden linkages between suppliers. Examples: Spend Control Tower, Procurement Analysis.
 
-Similar Intelligent Applications will be available across Customer and Supply Chain Analytics in the future.
-
 ## Resources
 
 [SAP Business Data Cloud - FAQ](https://community.sap.com/t5/technology-blogs-by-sap/sap-business-data-cloud-faqs/ba-p/14022781)
 
 ## Conclusion
 
-Using SAP's pre-built data products and Intelligent Applications provides a comprehensive view of critical business processes across all SAP applications. This ensures consistency and business context with SAP-managed data sets and semantics. Adopting SAP data products offers comprehensive lifecycle management, eliminating the overhead of building a trusted data foundation.
+Using SAP's pre-built data products and Intelligent Content provides a comprehensive view of critical business processes across all SAP applications. This ensures consistency and business context with SAP-managed data sets and semantics. Adopting SAP data products offers comprehensive lifecycle management, eliminating the overhead of building a trusted data foundation.
